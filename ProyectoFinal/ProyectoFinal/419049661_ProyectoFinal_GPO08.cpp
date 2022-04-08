@@ -129,6 +129,7 @@ int main( )
     // Load textures
 
     Model table((char*)"Models/Table/Table.obj");
+    Model lamp((char*)"Models/Lamp/Lamp.obj");
 
     GLuint texture;
     glGenTextures(1, &texture);
@@ -171,7 +172,7 @@ int main( )
 
         model = glm:: mat4(1);
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        table.Draw(shader);
+        lamp.Draw(shader);
 
         glBindVertexArray(0);
 
@@ -211,39 +212,6 @@ void DoMovement( )
     {
         camera.ProcessKeyboard( RIGHT, deltaTime );
     }
-    if (keys[GLFW_KEY_O] && !movimiento) {
-        if (rot == 0) {
-            cerrada = true;
-            movimiento = true;
-        }
-
-        if (rot == 90.0f){
-            abierta = true;
-            movimiento = true;
-        }
-    }
-    
-    if (abierta) {
-        if (rot > 0.0f)
-            rot -= 0.05f;
-        else {
-            rot = 0.0f;
-            abierta = false;
-            movimiento = false;
-        }
-    }
-    if (cerrada) {
-        if (rot < 90.0f)
-            rot += 0.05f;
-        else {
-            rot = 90.0f;
-            cerrada = false;
-            movimiento = false;
-        }
-    }
-    
-    
-
 }
 
 // Is called whenever a key is pressed/released via GLFW

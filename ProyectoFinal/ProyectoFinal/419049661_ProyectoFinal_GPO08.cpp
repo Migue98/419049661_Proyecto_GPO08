@@ -7,6 +7,10 @@
 // GLFW
 #include <GLFW/glfw3.h>
 
+// Other Libs
+#include "SOIL2/SOIL2.h"
+#include "stb_image.h"
+
 // GL includes
 #include "Shader.h"
 #include "Camera.h"
@@ -17,9 +21,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-// Other Libs
-#include "SOIL2/SOIL2.h"
-#include "stb_image.h"
+
 // Properties
 const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;

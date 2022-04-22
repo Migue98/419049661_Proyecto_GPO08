@@ -130,6 +130,7 @@ int main( )
 
     Model table((char*)"Models/Table/Table.obj");
     Model lamp((char*)"Models/Lamp/Lamp.obj");
+    Model sofa((char*)"Models/Sofa/sofa.obj");
 
     GLuint texture;
     glGenTextures(1, &texture);
@@ -172,7 +173,7 @@ int main( )
 
         model = glm:: mat4(1);
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        lamp.Draw(shader);
+        sofa.Draw(shader);
 
         glBindVertexArray(0);
 

@@ -42,10 +42,10 @@ bool firstMouse = true;
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 
-float movx = 9.0f;
-float movy = 4.9f;
-float movz = 6.85f;
-float s = 0.8f;
+float movx = 0.0f;
+float movy = 0.0f;
+float movz = 0.0f;
+float s = 1.0f;
 
 //Variables para animaciones
 bool uno = false;
@@ -157,17 +157,17 @@ int main( ){
     glEnableVertexAttribArray(2);
 
     // Load textures
-    ////Mesa
-    //Model table((char*)"Models/Table/Table.obj");
-    ////Lampara
-    //Model lamp1((char*)"Models/Lamp/lamp1.obj");
-    //Model lamp2((char*)"Models/Lamp/lamp2.obj");
-    ////Sofa
-    //Model sofa((char*)"Models/Sofa/sofa.obj");
-    ////Silla Mecedora
-    //Model silla((char*)"Models/Chairs/chair1.obj");
-    ////TV
-    //Model tv((char*)"Models/TV/tv.obj");
+    //Mesa
+    Model table((char*)"Models/Table/Table.obj");
+    //Lampara
+    Model lamp1((char*)"Models/Lamp/lamp1.obj");
+    Model lamp2((char*)"Models/Lamp/lamp2.obj");
+    //Sofa
+    Model sofa((char*)"Models/Sofa/sofa.obj");
+    //Silla Mecedora
+    Model silla((char*)"Models/Chairs/chair1.obj");
+    //TV
+    Model tv((char*)"Models/TV/tv.obj");
     //Reloj
     Model mueble((char*)"Models/Clock/mueble.obj");
     Model cadena1((char*)"Models/Clock/cadena1.obj");
@@ -176,12 +176,12 @@ int main( ){
     Model manesilla1((char*)"Models/Clock/manesilla1.obj");
     Model manesilla2((char*)"Models/Clock/manesilla2.obj");
     //Cuadro
-    //Model cuadro((char*)"Models/Picture/Picture.obj");
-    ////Tapete
-    //Model alfombra((char*)"Models/tapete/alfombra.obj");
+    Model cuadro((char*)"Models/Picture/Picture.obj");
+    //Tapete
+    Model alfombra((char*)"Models/tapete/alfombra.obj");
     //Casa
     Model casa((char*)"Models/Casa/casa.obj");
-    //Model puerta((char*)"Models/Casa/puerta.obj");
+    Model puerta((char*)"Models/Casa/puerta.obj");
 
     GLuint texture;
     glGenTextures(1, &texture);
@@ -222,46 +222,45 @@ int main( ){
         // Draw the loaded model
         glm::mat4 model(1);
 
-        ////Mesa
-        //model = glm::mat4(1);
-        //model = glm::translate(model, glm::vec3(2.87f + movMesa, 0.05f, -0.55f));
-        //model = glm::rotate(model, glm::radians(rotMesa), glm::vec3(1.0f, 0.0f, 0.0f));
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //table.Draw(shader);
+        //Mesa
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(2.87f + movMesa, 0.05f, -0.55f));
+        model = glm::rotate(model, glm::radians(rotMesa), glm::vec3(1.0f, 0.0f, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        table.Draw(shader);
         
-        ////Lampara
-        //model = glm::mat4(1);
-        //model = glm::translate(model, glm::vec3(-2.33, 2.75, 4.05));
-        //model = glm::scale(model, glm::vec3(1.5, 1.5, 1.5));
-        //model = glm::rotate(model, glm::radians(rotLamp), glm::vec3(1.0f, 0.0f, 0.0f));
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //lamp1.Draw(shader);
+        //Lampara
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(-2.33, 2.75, 4.05));
+        model = glm::scale(model, glm::vec3(1.5, 1.5, 1.5));
+        model = glm::rotate(model, glm::radians(rotLamp), glm::vec3(1.0f, 0.0f, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        lamp1.Draw(shader);
 
-        //model = glm::mat4(1);
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //lamp2.Draw(shader);
+        model = glm::mat4(1);
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        lamp2.Draw(shader);
         
-        ////Sofa
-        //model = glm::mat4(1);
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //sofa.Draw(shader);
+        //Sofa
+        model = glm::mat4(1);
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        sofa.Draw(shader);
         
-        ////Silla Mecedora
-        //model = glm::mat4(1);
-        //model = glm::translate(model, glm::vec3(2.0f, 0.08f, -3.27f));
-        //model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        //model = glm::rotate(model, glm::radians(rotSilla), glm::vec3(1.0f, 0.0f, 0.0f));
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //silla.Draw(shader);
+        //Silla Mecedora
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(2.0f, 0.08f, -3.27f));
+        model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(rotSilla), glm::vec3(1.0f, 0.0f, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        silla.Draw(shader);
         
-        ////TV
-        //model = glm::mat4(1);
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //tv.Draw(shader);
+        //TV
+        model = glm::mat4(1);
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        tv.Draw(shader);
         
         //Reloj
         model = glm::mat4(1);
-        //model = glm::translate(model, glm::vec3(2.0f, 0.08f, -3.27f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         mueble.Draw(shader);
 
@@ -285,42 +284,48 @@ int main( ){
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         pendulo.Draw(shader);
         
-        //model = glm::mat4(1);
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //manesilla1.Draw(shader);
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(8.48f, 5.4f, 6.88f));
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(rotManesilla1), glm::vec3(0.0f, 0.0f, 1.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        manesilla1.Draw(shader);
         
-        //model = glm::mat4(1);
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //manesilla2.Draw(shader);
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(8.48f, 5.4f, 6.88f));
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(rotManesilla2), glm::vec3(0.0f, 0.0f, 1.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        manesilla2.Draw(shader);
 
-        ////Cuadro
-        //model = glm::mat4(1);
-        ////Transformaciones a su lugar de origen
-        //model = glm::translate(model, glm::vec3(9.48f, 2.6f - movCuadro, -0.65f));
-        //model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        //model = glm::scale(model, glm::vec3(1.25f, 1.25f, 1.25f));
-        ////Transformaciones para animaciones
-        //model = glm::rotate(model, glm::radians(-rot1Cuadro), glm::vec3(0.0f, 0.0f, 1.0f));
-        //model = glm::rotate(model, glm::radians(rot2Cuadro), glm::vec3(1.0f, 0.0f, 0.0f));
-        //model = glm::rotate(model, glm::radians(rot3Cuadro), glm::vec3(0.0f, 1.0f, 0.0f));
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //cuadro.Draw(shader);
+        //Cuadro
+        model = glm::mat4(1);
+        //Transformaciones a su lugar de origen
+        model = glm::translate(model, glm::vec3(9.48f, 2.6f - movCuadro, -0.65f));
+        model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(1.25f, 1.25f, 1.25f));
+        //Transformaciones para animaciones
+        model = glm::rotate(model, glm::radians(-rot1Cuadro), glm::vec3(0.0f, 0.0f, 1.0f));
+        model = glm::rotate(model, glm::radians(rot2Cuadro), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(rot3Cuadro), glm::vec3(0.0f, 1.0f, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        cuadro.Draw(shader);
         
-        ////Tapete
-        //model = glm::mat4(1);
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //alfombra.Draw(shader);
+        //Tapete
+        model = glm::mat4(1);
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        alfombra.Draw(shader);
         
         //Casa
         model = glm::mat4(1);
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         casa.Draw(shader);
 
-        //model = glm::mat4(1);
-        //model = glm::translate(model, glm::vec3(-1.97, 0.0f, 9.81));
-        //model = glm::rotate(model, glm::radians(-rotPuerta), glm::vec3(0.0f, 1.0f, 0.0f));
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //puerta.Draw(shader);
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(-1.97, 0.0f, 9.81));
+        model = glm::rotate(model, glm::radians(-rotPuerta), glm::vec3(0.0f, 1.0f, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        puerta.Draw(shader);
 
         glBindVertexArray(0);
 
@@ -366,42 +371,13 @@ void DoMovement(){
         parte1Cuadro = true;
     }
     if (keys[GLFW_KEY_5]) {
-        cinco = !cinco;
+        cinco = true;
     }
     if (keys[GLFW_KEY_6]) {
+        cinco = false;
+    }
+    if (keys[GLFW_KEY_7]) {
         p = true;
-    }
-    if (keys[GLFW_KEY_U]) {
-        movx += 0.01f;
-        printf("(%.2f,%.2f,%.2f)\n", movx, movy, movz);
-    }
-    if (keys[GLFW_KEY_I]) {
-        movx -= 0.01f;
-        printf("(%.2f,%.2f,%.2f)\n", movx, movy, movz);
-    }
-    if (keys[GLFW_KEY_J]) {
-        movy += 0.01f;
-        printf("(%.2f,%.2f,%.2f)\n", movx, movy, movz);
-    }
-    if (keys[GLFW_KEY_K]) {
-        movy -= 0.01f;
-        printf("(%.2f,%.2f,%.2f)\n", movx, movy, movz);
-    }
-    if (keys[GLFW_KEY_N]) {
-        movz += 0.01f;
-        printf("(%.2f,%.2f,%.2f)\n", movx, movy, movz);
-    }
-    if (keys[GLFW_KEY_M]) {
-        movz -= 0.01f;
-        printf("(%.2f,%.2f,%.2f)\n", movx, movy, movz);
-    }
-    if (keys[GLFW_KEY_O]) {
-        s += 0.01f;
-        printf("(%.2f,%.2f,%.2f)\n", movx, movy, movz);
-    }
-    if (keys[GLFW_KEY_L]) {
-        s -= 0.01f;
-        printf("(%.2f)\n", s);
     }
 }
 // Is called whenever a key is pressed/released via GLFW
@@ -527,7 +503,8 @@ void anim4() {
             if (movCuadro > 2.6f && rot2Cuadro >= 90.0f && rot3Cuadro >= 15.0f) {
                 parte2Cuadro = false;
             }
-        }else {
+        }
+        else {
             cCuadro++;
             if (cCuadro == 800) {
                 cuatro = false;
@@ -540,16 +517,8 @@ void anim4() {
         }
     }
 }
-/*
-    cada hora equivale a 30°
-    cada min equivale a 6°
-
-    movcadena de 0.0 a 0.25
-    rotPendulo de 8.0° a -8.0°
-*/
 //Animacion de Reloj
 void anim5() {
-        //Animacion
         if (cinco && parte1Reloj) {
             movCadena += 0.001f;
             rotPendulo += 0.032f;
@@ -561,8 +530,8 @@ void anim5() {
         if (cinco && parte2Reloj) {
             movCadena -= 0.001f;
             rotPendulo -= 0.032f;
-            minutos++;
             if (movCadena < -0.25f && rotPendulo < -8.0f) {
+                minutos++;
                 parte2Reloj = false;
                 parte1Reloj = true;
                 if (minutos > 59) {
@@ -570,10 +539,10 @@ void anim5() {
                     minutos = 0;
                     if (hrs > 11)
                         hrs = 0;
-                    rotManesilla1 = minutos * 6.0f;
-                    rotManesilla2 = hrs * 30.0f;
                 }
             }
+            rotManesilla1 = minutos * 6.0f;
+            rotManesilla2 = hrs * 30.0f;
         }
 }
 void animPuerta(){

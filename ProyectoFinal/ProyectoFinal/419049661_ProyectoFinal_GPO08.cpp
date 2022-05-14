@@ -415,6 +415,7 @@ void MouseCallback( GLFWwindow *window, double xPos, double yPos ){
 //Animacion Lampara
 void anim1() {
     if (uno)
+        //Rotación hacia abajo
         if (parte1Lamp) {
             rotLamp -= 0.25f;
             if (rotLamp < -45.0f) {
@@ -422,6 +423,7 @@ void anim1() {
                 parte2Lamp = true;
             }
         } 
+        //Rotacion hacia arriba
         if (parte2Lamp) {
             rotLamp += 0.25f;
             if (rotLamp > 15.0f) {
@@ -430,6 +432,7 @@ void anim1() {
                 cLamp++;
             }
         }
+        //Si ya hicimos 5 ciclos, entonces paramos
         if (cLamp == 5) {
             parte1Lamp = false;
             uno = false;

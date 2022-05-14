@@ -43,7 +43,7 @@ GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 
 float movx = 9.48f;
-float movy = 3.34f;
+float movy = 2.6f;
 float movz = -0.65f;
 float s = 1.6f;
 
@@ -76,15 +76,21 @@ int cMesa = 0;
 
 //Amin 4 Cuadro
 float movCuadro = 0.0f;
-float rotxCuadro = 0.0f;
-float rotyCuadro = 0.0f;
-float rotzCuadro = 0.0f;
+float rot1Cuadro = 0.0f;
+float rot2Cuadro = 0.0f;
+float rot3Cuadro = 0.0f;
+float parte1Cuadro = 0.0f;
+float parte2Cuadro = 0.0f;
+float parte3Cuadro = 0.0f;
+float parte4Cuadro = 0.0f;
+int cCuadro = 0;
 
 //Anim 5 Reloj
 float movCadena = 0.0f;
 float rotPendulo = 0.0f;
 float rotManesilla1 = 0.0f;
 float rotManesilla2 = 0.0f;
+bool parte1Reloj = false;
 
 //Puerta
 float rotPuerta = 0.0f;
@@ -266,9 +272,14 @@ int main( ){
         //manesilla2.Draw(shader);
         //Cuadro
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(movx, movy, movz));
+        //Transformaciones a su lugar de origen
+        model = glm::translate(model, glm::vec3(9.48f, 2.6f - movCuadro, -0.65f));
         model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         model = glm::scale(model, glm::vec3(1.25f, 1.25f, 1.25f));
+        //Transformaciones para animaciones
+        model = glm::rotate(model, glm::radians(-rot1Cuadro), glm::vec3(0.0f, 0.0f, 1.0f));
+        model = glm::rotate(model, glm::radians(rot2Cuadro), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(rot3Cuadro), glm::vec3(0.0f, 1.0f, 0.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         cuadro.Draw(shader);
         ////Tapete
@@ -324,9 +335,11 @@ void DoMovement(){
     }
     if (keys[GLFW_KEY_4]) {
         cuatro = true;
+        parte1Cuadro = true;
     }
     if (keys[GLFW_KEY_5]) {
         cinco = true;
+        parte1Reloj = true;
     }
     if (keys[GLFW_KEY_6]) {
         p = true;
@@ -469,10 +482,35 @@ void anim3() {
             }
         }
 }
-//2.27 a la coordenada y = 1.07
 void anim4() {
-    if (cuatro)
-        printf("");
+    if (cuatro) {
+        if (parte1Cuadro) {
+            movCuadro += 0.01f;
+            rot1Cuadro += 0.06f;
+            if (movCuadro > 2.50f && rot1Cuadro > 15.0f) {
+                parte1Cuadro = false;
+                parte2Cuadro = true;
+            }
+        }
+        else if (parte2Cuadro) {
+            movCuadro += 0.001f;
+            rot2Cuadro += 0.9f;
+            rot3Cuadro += 0.15f;
+            if (movCuadro > 2.6f && rot2Cuadro >= 90.0f && rot3Cuadro >= 15.0f) {
+                parte2Cuadro = false;
+            }
+        }else {
+            cCuadro++;
+            if (cCuadro == 800) {
+                cuatro = false;
+                rot1Cuadro = 0.0f;
+                rot2Cuadro = 0.0f;
+                rot3Cuadro = 0.0f;
+                movCuadro = 0.0f;
+                cCuadro = 0;
+            }
+        }
+    }
 }
 void anim5() {
     if (cinco)

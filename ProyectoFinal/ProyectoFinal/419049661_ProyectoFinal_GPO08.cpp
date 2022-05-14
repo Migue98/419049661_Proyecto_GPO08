@@ -42,10 +42,10 @@ bool firstMouse = true;
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 
-float movx = 0.0f;
-float movy = 0.0f;
-float movz = 0.0f;
-float s = 1.6f;
+float movx = 9.0f;
+float movy = 4.9f;
+float movz = 6.85f;
+float s = 0.8f;
 
 //Variables para animaciones
 bool uno = false;
@@ -79,10 +79,8 @@ float movCuadro = 0.0f;
 float rot1Cuadro = 0.0f;
 float rot2Cuadro = 0.0f;
 float rot3Cuadro = 0.0f;
-float parte1Cuadro = 0.0f;
-float parte2Cuadro = 0.0f;
-float parte3Cuadro = 0.0f;
-float parte4Cuadro = 0.0f;
+bool parte1Cuadro = false;
+bool parte2Cuadro = false;
 int cCuadro = 0;
 
 //Anim 5 Reloj
@@ -90,7 +88,12 @@ float movCadena = 0.0f;
 float rotPendulo = 0.0f;
 float rotManesilla1 = 0.0f;
 float rotManesilla2 = 0.0f;
-bool parte1Reloj = false;
+bool parte1Reloj = true;
+bool parte2Reloj = false;
+int minutos = 0;
+int hrs = 0;
+bool encendido = false;
+int cReloj = 0;
 
 //Puerta
 float rotPuerta = 0.0f;
@@ -165,20 +168,20 @@ int main( ){
     //Model silla((char*)"Models/Chairs/chair1.obj");
     ////TV
     //Model tv((char*)"Models/TV/tv.obj");
-    ////Reloj
-    //Model mueble((char*)"Models/Clock/mueble.obj");
-    //Model cadena1((char*)"Models/Clock/cadena1.obj");
-    //Model cadena2((char*)"Models/Clock/cadena2.obj");
-    //Model pendulo((char*)"Models/Clock/pendulo.obj");
-    //Model manesilla1((char*)"Models/Clock/manesilla1.obj");
-    //Model manesilla2((char*)"Models/Clock/manesilla2.obj");
+    //Reloj
+    Model mueble((char*)"Models/Clock/mueble.obj");
+    Model cadena1((char*)"Models/Clock/cadena1.obj");
+    Model cadena2((char*)"Models/Clock/cadena2.obj");
+    Model pendulo((char*)"Models/Clock/pendulo.obj");
+    Model manesilla1((char*)"Models/Clock/manesilla1.obj");
+    Model manesilla2((char*)"Models/Clock/manesilla2.obj");
     //Cuadro
-    Model cuadro((char*)"Models/Picture/Picture.obj");
+    //Model cuadro((char*)"Models/Picture/Picture.obj");
     ////Tapete
     //Model alfombra((char*)"Models/tapete/alfombra.obj");
     //Casa
     Model casa((char*)"Models/Casa/casa.obj");
-    Model puerta((char*)"Models/Casa/puerta.obj");
+    //Model puerta((char*)"Models/Casa/puerta.obj");
 
     GLuint texture;
     glGenTextures(1, &texture);
@@ -225,6 +228,7 @@ int main( ){
         //model = glm::rotate(model, glm::radians(rotMesa), glm::vec3(1.0f, 0.0f, 0.0f));
         //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         //table.Draw(shader);
+        
         ////Lampara
         //model = glm::mat4(1);
         //model = glm::translate(model, glm::vec3(-2.33, 2.75, 4.05));
@@ -236,10 +240,12 @@ int main( ){
         //model = glm::mat4(1);
         //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         //lamp2.Draw(shader);
+        
         ////Sofa
         //model = glm::mat4(1);
         //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         //sofa.Draw(shader);
+        
         ////Silla Mecedora
         //model = glm::mat4(1);
         //model = glm::translate(model, glm::vec3(2.0f, 0.08f, -3.27f));
@@ -247,29 +253,46 @@ int main( ){
         //model = glm::rotate(model, glm::radians(rotSilla), glm::vec3(1.0f, 0.0f, 0.0f));
         //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         //silla.Draw(shader);
+        
         ////TV
         //model = glm::mat4(1);
         //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         //tv.Draw(shader);
-        ////Reloj
-        //model = glm::mat4(1);
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //mueble.Draw(shader);
-        //model = glm::mat4(1);
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //cadena1.Draw(shader);
-        //model = glm::mat4(1);
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //cadena2.Draw(shader);
-        //model = glm::mat4(1);
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //pendulo.Draw(shader);
+        
+        //Reloj
+        model = glm::mat4(1);
+        //model = glm::translate(model, glm::vec3(2.0f, 0.08f, -3.27f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        mueble.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(0.0f, movCadena, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        cadena1.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(0.0f, -movCadena, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        cadena2.Draw(shader);
+
+        model = glm::mat4(1);
+        //Posicion inicial del pendulo
+        model = glm::translate(model, glm::vec3(9.0f, 4.7f, 6.85f));
+        model = glm::scale(model, glm::vec3(0.63f, 0.63f, 0.63f));
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        //Animacion del pendulo
+        model = glm::rotate(model, glm::radians(rotPendulo), glm::vec3(0.0f, 0.0f, 1.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        pendulo.Draw(shader);
+        
         //model = glm::mat4(1);
         //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         //manesilla1.Draw(shader);
+        
         //model = glm::mat4(1);
         //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         //manesilla2.Draw(shader);
+
         ////Cuadro
         //model = glm::mat4(1);
         ////Transformaciones a su lugar de origen
@@ -282,20 +305,22 @@ int main( ){
         //model = glm::rotate(model, glm::radians(rot3Cuadro), glm::vec3(0.0f, 1.0f, 0.0f));
         //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         //cuadro.Draw(shader);
+        
         ////Tapete
         //model = glm::mat4(1);
         //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         //alfombra.Draw(shader);
+        
         //Casa
         model = glm::mat4(1);
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         casa.Draw(shader);
 
-        model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(-1.97, 0.0f, 9.81));
-        model = glm::rotate(model, glm::radians(-rotPuerta), glm::vec3(0.0f, 1.0f, 0.0f));
-        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        puerta.Draw(shader);
+        //model = glm::mat4(1);
+        //model = glm::translate(model, glm::vec3(-1.97, 0.0f, 9.81));
+        //model = glm::rotate(model, glm::radians(-rotPuerta), glm::vec3(0.0f, 1.0f, 0.0f));
+        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        //puerta.Draw(shader);
 
         glBindVertexArray(0);
 
@@ -341,8 +366,7 @@ void DoMovement(){
         parte1Cuadro = true;
     }
     if (keys[GLFW_KEY_5]) {
-        cinco = true;
-        parte1Reloj = true;
+        cinco = !cinco;
     }
     if (keys[GLFW_KEY_6]) {
         p = true;
@@ -380,7 +404,6 @@ void DoMovement(){
         printf("(%.2f)\n", s);
     }
 }
-
 // Is called whenever a key is pressed/released via GLFW
 void KeyCallback( GLFWwindow *window, int key, int scancode, int action, int mode )
 {
@@ -462,6 +485,7 @@ void anim2() {
             cSilla = 0;
         }
 }
+//Animacion de Mesa
 void anim3() {
     if (tres)
         if (parte1Mesa){
@@ -485,6 +509,7 @@ void anim3() {
             }
         }
 }
+//Animacion de cuadro
 void anim4() {
     if (cuatro) {
         if (parte1Cuadro) {
@@ -515,9 +540,41 @@ void anim4() {
         }
     }
 }
+/*
+    cada hora equivale a 30°
+    cada min equivale a 6°
+
+    movcadena de 0.0 a 0.25
+    rotPendulo de 8.0° a -8.0°
+*/
+//Animacion de Reloj
 void anim5() {
-    if (cinco)
-        printf("");
+        //Animacion
+        if (cinco && parte1Reloj) {
+            movCadena += 0.001f;
+            rotPendulo += 0.032f;
+            if (movCadena > 0.25f && rotPendulo > 8.0f) {
+                parte1Reloj = false;
+                parte2Reloj = true;
+            }
+        }
+        if (cinco && parte2Reloj) {
+            movCadena -= 0.001f;
+            rotPendulo -= 0.032f;
+            minutos++;
+            if (movCadena < -0.25f && rotPendulo < -8.0f) {
+                parte2Reloj = false;
+                parte1Reloj = true;
+                if (minutos > 59) {
+                    hrs++;
+                    minutos = 0;
+                    if (hrs > 11)
+                        hrs = 0;
+                    rotManesilla1 = minutos * 6.0f;
+                    rotManesilla2 = hrs * 30.0f;
+                }
+            }
+        }
 }
 void animPuerta(){
     if (p) {

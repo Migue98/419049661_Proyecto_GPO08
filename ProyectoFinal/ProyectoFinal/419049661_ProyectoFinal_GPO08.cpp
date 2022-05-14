@@ -42,9 +42,9 @@ bool firstMouse = true;
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 
-float movx = 9.48f;
-float movy = 2.6f;
-float movz = -0.65f;
+float movx = 0.0f;
+float movy = 0.0f;
+float movz = 0.0f;
 float s = 1.6f;
 
 //Variables para animaciones
@@ -270,18 +270,18 @@ int main( ){
         //model = glm::mat4(1);
         //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         //manesilla2.Draw(shader);
-        //Cuadro
-        model = glm::mat4(1);
-        //Transformaciones a su lugar de origen
-        model = glm::translate(model, glm::vec3(9.48f, 2.6f - movCuadro, -0.65f));
-        model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        model = glm::scale(model, glm::vec3(1.25f, 1.25f, 1.25f));
-        //Transformaciones para animaciones
-        model = glm::rotate(model, glm::radians(-rot1Cuadro), glm::vec3(0.0f, 0.0f, 1.0f));
-        model = glm::rotate(model, glm::radians(rot2Cuadro), glm::vec3(1.0f, 0.0f, 0.0f));
-        model = glm::rotate(model, glm::radians(rot3Cuadro), glm::vec3(0.0f, 1.0f, 0.0f));
-        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        cuadro.Draw(shader);
+        ////Cuadro
+        //model = glm::mat4(1);
+        ////Transformaciones a su lugar de origen
+        //model = glm::translate(model, glm::vec3(9.48f, 2.6f - movCuadro, -0.65f));
+        //model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        //model = glm::scale(model, glm::vec3(1.25f, 1.25f, 1.25f));
+        ////Transformaciones para animaciones
+        //model = glm::rotate(model, glm::radians(-rot1Cuadro), glm::vec3(0.0f, 0.0f, 1.0f));
+        //model = glm::rotate(model, glm::radians(rot2Cuadro), glm::vec3(1.0f, 0.0f, 0.0f));
+        //model = glm::rotate(model, glm::radians(rot3Cuadro), glm::vec3(0.0f, 1.0f, 0.0f));
+        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        //cuadro.Draw(shader);
         ////Tapete
         //model = glm::mat4(1);
         //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
@@ -290,9 +290,12 @@ int main( ){
         model = glm::mat4(1);
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         casa.Draw(shader);
-        /*model = glm::mat4(1);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(-1.97, 0.0f, 9.81));
+        model = glm::rotate(model, glm::radians(-rotPuerta), glm::vec3(0.0f, 1.0f, 0.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        puerta.Draw(shader);*/
+        puerta.Draw(shader);
 
         glBindVertexArray(0);
 
@@ -519,14 +522,14 @@ void anim5() {
 void animPuerta(){
     if (p) {
         if (abierta) {
-            rotPuerta -= 1.0f;
+            rotPuerta -= 0.5f;
             if (rotPuerta < 0.0f) {
                 abierta = false;
                 p = false;
             }
         }
         else {
-            rotPuerta += 1.0f;
+            rotPuerta += 0.5f;
             if (rotPuerta > 90.0f) {
                 abierta = true;
                 p = false;
